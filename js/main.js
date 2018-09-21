@@ -7,11 +7,15 @@ $(function() {
       }, 0);
       return;
     }
-    const $div = $('<div/>', {
-      css: {
-        'flex': 'none'
-      }
-    });
+    let $div = $('#trello-layout');
+    if ($div.length == 0) {
+      $div = $('<div/>', {
+        id: 'trello-layout',
+        css: {
+          'flex': 'none'
+        }
+      });
+    }
     const $wrapper = $('div.egt-ui-widgets-wrapper');
     $wrapper.css({
       'width': '50%',
@@ -28,5 +32,8 @@ $(function() {
     $div.append($canvas);
     $('div.board-main-content').append($div);
   };
+  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    update();
+  });
   update();
 });
